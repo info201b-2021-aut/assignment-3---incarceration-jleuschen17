@@ -1,0 +1,74 @@
+---
+title: 'Assignment 3: Data Visualization'
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+The United States prison system is a far from perfect institution. With problems ranging from racial disparity to overcrowded jails, the system as a whole has been a topic of debate in recent years. One area of concern is the rates of incarceration across different races and ethnicity. The Vera Institute of Justice Prison Data set is a useful tool in answering questions regarding incarceration rates across different racial and ethnic backgrounds. Specifically data relating to prison population and ethnic makeup are especially useful. For this project I will be analyzing the features relating to prison population across different ethnicity (black_jail_pop, white_jail_pop, etc.)of the Vera Institute data set
+
+```{r, include = FALSE}
+library(dplyr)
+source("analysis.R")
+library(knitr)
+```
+
+## Summary
+
+After some initial analysis of the data set I found a few metrics which help to paint a picture of the US prison system. First the breakdown of race in prisons included in the Vera Institute data set indicated the racial background with the highest proportion of individuals in prison in 2016 was 'white' at `r white_prop_jail` with 'black' and 'latinx' coming in second and third at `r black_prop_jail` and `r latinx_prop_jail` respectively. Although, when standardized against overall population proportions the rate of black incarceration rises to over `r blackVwhite_prop` that of white incarceration. Aside from gender and race, some interesting metrics relating to incarceration are the number of jails which qualify as overcrowded, `r num_overcrowded_jails`, and the change in the number of incarcerated individuals since 1985, `r difference_in_pop`%.  
+
+
+*[US Census Data](https://www.census.gov/quickfacts/fact/table/US/PST045219) used to calculate overall population totals. 
+
+## Incarceration Rates Across Different Ethnic Groups: Top 10 US States
+```{r, echo=FALSE}
+tx_plot | ca_plot
+fl_plot | ga_plot
+oh_plot | pa_plot
+ny_plot | az_plot
+il_plot | mi_plot
+```
+#### US Average
+```{r, echo=FALSE}
+usAvg_plot
+```
+
+#### Summary
+The series of charts illustrates how the number of US incarcerations have varied across different racial backgrounds over time. It is immediately evident that black and white racial groups account for the majority of incarcerations though other trends become evident when comparing states against one another and the national average. Southeastern states like Georgia tend to have higher rates of black incarceration compared to western states like California or Arizona. Additionally,  states with large latinx influences like Texas and California have significantly higher rates of latinx incarceration to others. 
+
+#### Design
+The consistent time series line plot style allows for easy comparison of incarceration totals across different states. Each color represents an individual racial group and can be compared within a state and to other states. I decided not to scale all of the plots to a uniform value as it would make it difficult to see the underlying trends in the less populated states--also the next set of graphs shows incarceration totals by state. 
+
+## White vs Black Incarceration Rates (2016)
+```{r, echo=FALSE}
+prop_graph_states
+pop_graph_states
+prop_standerdized_graph_states
+pop_standerdized_graph_states
+```
+
+
+*Standerdized graphs use ratio of white to black individuals from [US Census Data](https://www.census.gov/quickfacts/fact/table/US/PST045219)
+
+#### Summary
+The 4 bar graphs display the differences in black and white incarceration rates and totals across US states. The standardized graphs are used to account for the difference in black and white populations in the US. When comparing the non-standardized graphs similar trends to the time-series plots emerge. States in the south or those with higher black populations tend to have higher black incarceration rates and totals. The true difference in the rates of white and black incarceration are illustrated in the standardized plots. By illustrating how incarceration rates and totals would look if black and white populations were equal the charts express the magnitude of difference across the two racial backgrounds.
+
+#### Design
+I elected to use the dual bar graph style as is provides a direct comparison between the two selected variables--black and white incarceration. Next, both population and jail proportion metrics were used to illustrate the number of incarceration across different states and the difference in black and white incarceration between states. Finally, the standerdized data allows for a visual representation of the magnitude of difference between black and white incarceration. 
+
+## Geographical Incarceration Data
+```{r, echo=FALSE}
+usmap_plot
+```
+
+#### Summary
+The geographical data provides a visual identifier to the different counties expressed in the data set. It again illustrates the increase in black incarceration rates across southern states and large urban areas. 
+
+#### Design
+The focus of much of this analysis has been on the rates of black incarceration across the US. Because of this I elected to explore this trend visually through the use of a map of the us. The map is divided by county fips and uses a blue gradient scale to represent black incarceration in a way that is easy to identify but not overwhelming or too complex to understand. 
